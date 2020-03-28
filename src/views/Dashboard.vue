@@ -17,6 +17,7 @@
 <script>
 import Todos from '../components/Todos'
 import Addtodo from '../components/Addtodo'
+import axios from 'axios'
 
 export default {
   components: {
@@ -35,6 +36,11 @@ export default {
     }
   },
   methods: {
+    created() {
+      axios.get('https://jsonplaceholder.typicode.com/todos/1')
+        .then(res => this.todos = res.data)
+        .catch(err => console.log(err))
+    },
     deleteTodo(id) {
       this.todos = this.todos.filter(todo => todo.id !== id)
     },
