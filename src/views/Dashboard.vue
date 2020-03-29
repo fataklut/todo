@@ -36,11 +36,6 @@ export default {
     }
   },
   methods: {
-    created() {
-      axios.get('https://jsonplaceholder.typicode.com/todos/1')
-        .then(res => this.todos = res.data)
-        .catch(err => console.log(err))
-    },
     deleteTodo(id) {
       this.todos = this.todos.filter(todo => todo.id !== id)
     },
@@ -51,6 +46,12 @@ export default {
       let findIndex = this.todos.findIndex(e => e.id == id)
       this.todos[findIndex].completed = true
     }
+  },
+  created() {
+    axios.get('https://jsonplaceholder.typicode.com/todos?_limit=7')
+      .then(res => this.todos = res.data)
+      .then(json => console.log(json))
+      .catch(err => console.log(err))
   }
 }
 </script>

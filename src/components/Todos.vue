@@ -1,8 +1,8 @@
 <template>
   <div>
-    <v-layout row wrap justify="start" align="center">
+    <v-layout row wrap align-content-space-around>
         <v-flex class="mt-6" v-for="todo in todos" :key="todo.id">
-            <v-card width="230px" :class="`mx-4 todo ${todo.completed}`">
+            <v-card max-width="300px" :class="`mx-4 todo ${todo.completed}`">
                 <v-card-title>{{ todo.title }}</v-card-title>
                 <v-card-subtitle v-if="todo.completed">Task completed</v-card-subtitle>
                 <v-card-subtitle v-else>Task incomplete</v-card-subtitle>
