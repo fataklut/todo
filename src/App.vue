@@ -2,7 +2,7 @@
   <v-app>
     <link href="https://fonts.googleapis.com/css?family=Material+Icons" rel="stylesheet">
     <Navbar />
-    <v-content class="mt-6 mx-12">
+    <v-content class="mt-6">
       <router-view></router-view>
     </v-content>
   </v-app>

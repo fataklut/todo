@@ -1,8 +1,8 @@
 <template>
   <div class="dashboard">
     <v-container>
-      <v-row> 
-        <v-col>
+      <v-row class="text-center"> 
+        <v-col> 
           <h1>Todolist</h1>
         </v-col>
         <v-col>
@@ -10,7 +10,7 @@
         </v-col>
       </v-row>
     </v-container>
-    <Todos v-bind:todos="todos" v-on:del-todo="deleteTodo" v-on:complete-todo="completeTodo" />
+    <Todos v-bind:todos="todos" v-on:del-todo="deleteTodo" v-on:complete-todo="completeTodo" v-on:rename-todo="renameTodo" />
   </div>
 </template>
 
@@ -26,25 +26,32 @@ export default {
   },
   data() {
     return {
-      todos: [
-        {
-          id: 1,
-          title: 'todo 1',
-          completed: false
-        },
-      ]
+      todos: []
     }
   },
   methods: {
     deleteTodo(id) {
-      this.todos = this.todos.filter(todo => todo.id !== id)
+      axios.delete(`https://jsonplaceholder.typicode.com/todos/${id}`)
+        .then(this.todos = this.todos.filter(todo => todo.id !== id))
+        .catch(err => console.log(err))
     },
     addTodo(newTodo) {
-      this.todos = [...this.todos, newTodo]
+      const { title, completed } = newTodo
+      axios.post('https://jsonplaceholder.typicode.com/todos', 
+      {
+        title,
+        completed
+      }).then(res => this.todos = [...this.todos, res.data])
+        .catch(err => console.log(err))
     },
     completeTodo(id) {
       let findIndex = this.todos.findIndex(e => e.id == id)
       this.todos[findIndex].completed = true
+    },
+    renameTodo(newIdAndName) {
+      let findIndex = this.todos.findIndex(e => e.id == newIdAndName[0])
+      this.todos[findIndex].title = newIdAndName[1]
+      alert()
     }
   },
   created() {

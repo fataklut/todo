@@ -2,12 +2,13 @@
   <div>
     <v-dialog
       v-model="dialog"
-      width="500"
+      width="400"
     >
       <template v-slot:activator="{ on }">
         <v-btn
-          class="success white--text"
+          class="success darken-1 white--text"
           v-on="on"
+          style="height: 48px"
         >
           Add new todo
         </v-btn>
@@ -22,8 +23,8 @@
         </v-card-title>
 
         <v-card-text>
-          <v-form class="px-3 pt-3">
-              <v-text-field title="Title" v-model="title" label="title" :rules="inputRules" class="mb-3"></v-text-field>
+          <v-form class="px-3 pt-3" ref="form">
+              <v-text-field id="addTodoInput" title="Title" v-model="title" label="title" :rules="inputRules" class="mb-3"></v-text-field>
               <v-btn color="success" @click="addTodo">Add todo</v-btn>
           </v-form>
         </v-card-text>
@@ -44,14 +45,16 @@
       }
     },
     methods: {
-        addTodo() {
-            const newTodo = {
-                title: this.title,
-                completed: false,
-            }
-            this.$emit('add-todo', newTodo)
-            this.dialog = false
-        }
+      addTodo() {
+        if (this.$refs.form.validate()) {
+          const newTodo = {
+              title: this.title,
+              completed: false,
+          }
+          this.$emit('add-todo', newTodo)
+          this.dialog = false
+        }     
+      }
     }
   }
 </script>
